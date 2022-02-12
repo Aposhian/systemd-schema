@@ -3,7 +3,7 @@ use crate::service::ServiceSection;
 use crate::install::InstallSection;
 use serde::Serialize;
 
-#[derive(Serialize)]
+#[derive(Serialize, Default)]
 #[serde(rename_all = "PascalCase")]
 pub struct Service {
     pub unit: UnitSection,

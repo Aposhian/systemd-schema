@@ -6,3 +6,12 @@ pub mod install;
 pub mod service;
 mod time;
 pub mod unit;
+
+pub mod prelude {
+    pub use crate::{
+        files::Service,
+        service::*,
+        unit::*,
+        install::*
+    };
+}

@@ -4,7 +4,7 @@ use serde::{Serialize, Serializer};
 use serde_with::skip_serializing_none;
 
 // TODO: use path type with args?
-type Command = String;
+type Command = &'static str;
 
 #[skip_serializing_none]
 #[derive(Serialize, Default)]
@@ -12,7 +12,7 @@ type Command = String;
 pub struct ServiceSection {
     #[serde(rename = "Type")]
     pub service_type: ServiceType,
-    pub exec_start: Option<Command>,
+    pub exec_start: Command,
     pub exec_start_pre: Option<Vec<ExecExtra>>,
     pub exec_start_post: Option<Vec<ExecExtra>>,
     pub exec_reload: Option<Command>,
@@ -32,12 +32,12 @@ impl Serialize for ExecExtra {
     where
         S: Serializer,
     {
-        let string = if self.fallible {
-            format!("-{}", self.command)
+        if self.fallible {
+            let string = format!("-{}", self.command);
+            serializer.serialize_str(&string)
         } else {
-            self.command.clone()
-        };
-        serializer.serialize_str(&string)
+            serializer.serialize_str(self.command)
+        }
     }
 }
 
