@@ -37,7 +37,7 @@ ExecStart=\r
                 ..Default::default()
             },
             install: InstallSection {
-                wanted_by: Some(vec!["multi-user.target"]),
+                wanted_by: Some(UnitReferenceList(vec!["multi-user.target"])),
                 ..Default::default()
             }
         },

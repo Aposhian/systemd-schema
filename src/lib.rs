@@ -12,6 +12,7 @@ pub mod prelude {
         files::Service,
         service::*,
         unit::*,
-        install::*
+        install::*,
+        common::*
     };
 }

@@ -31,4 +31,14 @@ impl Serialize for Timespan {
 // TODO: change this to something more strictly checked?
 pub type UnitReference = &'static str;
 
-pub type UnitReferenceList = Vec<UnitReference>;
+// Do a unit struct so that we can serialize it as a space separated string
+pub struct UnitReferenceList (pub Vec<UnitReference>);
+
+impl Serialize for UnitReferenceList {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.0.join(" "))
+    }
+}
